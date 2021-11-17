@@ -56,4 +56,4 @@
 
   ![](./img/detail.png)
 
-- 其他的Linux系统如法炮制
+- 其他的Linux系统如法炮制，重点在于使用的是**EAP-GTC协议**
