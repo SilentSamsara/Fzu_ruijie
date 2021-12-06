@@ -54,11 +54,11 @@
 
 - 抓包
 
-  <img src="D:\Document\Github\Fzu_ruijie\img\getmdf.png" alt="getmdf" style="zoom:67%;" />
+  ![getmdf](D:\Document\Github\Fzu_ruijie\img\getmdf.png)
 
   - 网卡选择有线连接的网卡，**不同电脑网卡名称不一**，视具体情况而定，如Realtek PCIe GBE Family Controller。如图设置完成后，点击开始
 
-  <img src="D:\Document\Github\Fzu_ruijie\img\getmdf2.png" alt="getmdf2" style="zoom:67%;" />
+  ![getmdf2](D:\Document\Github\Fzu_ruijie\img\getmdf2.png)
 
   - 点击确定，找到**8021x.exe**，在锐捷客户端的安装路径下，一般情况下路径为*C:\Program Files\Ruijie Networks\Ruijie Supplicant*
 
@@ -66,19 +66,19 @@
 
 - 运行**运行测试软件.exe**进行认证
 
-  ​	<img src="D:\Document\Github\Fzu_ruijie\img\authentication.png" alt="authentication" style="zoom:67%;" />
+  ​	![authentication](D:\Document\Github\Fzu_ruijie\img\authentication.png)
 
   ***网卡选择有线连接的网卡***
 
   - 点击**设置**
 
-    <img src="D:\Document\Github\Fzu_ruijie\img\authentication2.png" alt="authentication2" style="zoom:67%;" />
+    ![authentication2](D:\Document\Github\Fzu_ruijie\img\authentication2.png)
 
   - 填入锐捷账号（用户名）、锐捷密码后点击**“+”**
 
   - 点击参数设置
 
-    <img src="C:\Users\13705\AppData\Roaming\Typora\typora-user-images\image-20211206195739228.png" alt="image-20211206195739228" style="zoom:67%;" />
+    ![authentication3](D:\Document\Github\Fzu_ruijie\img\authentication3.png)
 
     自定义认证数据包，选择刚刚抓包获得的那个mdf文件
 
