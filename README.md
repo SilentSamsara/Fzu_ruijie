@@ -54,15 +54,15 @@
 
 - 抓包
 
-  ![getmdf](./img/getmdf.png)
+  ![getmpf](./img/getmdf.png)
 
   - 网卡选择有线连接的网卡，**不同电脑网卡名称不一**，视具体情况而定，如Realtek PCIe GBE Family Controller。如图设置完成后，点击开始
 
-  ![getmdf2](./img/getmdf2.png)
+  ![getmpf2](./img/getmdf2.png)
 
   - 点击确定，找到**8021x.exe**，在锐捷客户端的安装路径下，一般情况下路径为*C:\Program Files\Ruijie Networks\Ruijie Supplicant*
 
-  - 选择后**8021x.exe**，后会弹出原版锐捷客端的认证页面，点击认证（或者自动认证完成），认证完成后**MentoHUST工具**会弹出mdf文件的保存页面，**自己取个名字，保存到自己知道的地方**
+  - 选择后**8021x.exe**，后会弹出原版锐捷客端的认证页面，点击认证（或者自动认证完成），认证完成后**MentoHUST工具**会弹出mpf文件的保存页面，**自己取个名字，保存到自己知道的地方**
 
 - 运行**运行测试软件.exe**进行认证
 
@@ -80,7 +80,7 @@
 
     ![authentication3](./img/authentication3.png)
 
-    自定义认证数据包，选择刚刚抓包获得的那个mdf文件
+    自定义认证数据包，选择刚刚抓包获得的那个mpf文件
 
   - 点击确定后，点击认证
 
