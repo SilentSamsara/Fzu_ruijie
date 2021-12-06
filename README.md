@@ -48,6 +48,48 @@
 
 
 
+## Windows:
+
+***使用alternative文件夹中的文件，需要有锐捷客户端，文件内容来源：[路由器实现锐捷认证](https://blog.csdn.net/weixin_40500627/article/details/108395293)***
+
+- 抓包
+
+  <img src="D:\Document\Github\Fzu_ruijie\img\getmdf.png" alt="getmdf" style="zoom:67%;" />
+
+  - 网卡选择有线连接的网卡，**不同电脑网卡名称不一**，视具体情况而定，如Realtek PCIe GBE Family Controller。如图设置完成后，点击开始
+
+  <img src="D:\Document\Github\Fzu_ruijie\img\getmdf2.png" alt="getmdf2" style="zoom:67%;" />
+
+  - 点击确定，找到**8021x.exe**，在锐捷客户端的安装路径下，一般情况下路径为*C:\Program Files\Ruijie Networks\Ruijie Supplicant*
+
+  - 选择后**8021x.exe**，后会弹出原版锐捷客端的认证页面，点击认证（或者自动认证完成），认证完成后**MentoHUST工具**会弹出mdf文件的保存页面，**自己取个名字，保存到自己知道的地方**
+
+- 运行**运行测试软件.exe**进行认证
+
+  ​	<img src="D:\Document\Github\Fzu_ruijie\img\authentication.png" alt="authentication" style="zoom:67%;" />
+
+  ***网卡选择有线连接的网卡***
+
+  - 点击**设置**
+
+    <img src="D:\Document\Github\Fzu_ruijie\img\authentication2.png" alt="authentication2" style="zoom:67%;" />
+
+  - 填入锐捷账号（用户名）、锐捷密码后点击**“+”**
+
+  - 点击参数设置
+
+    <img src="C:\Users\13705\AppData\Roaming\Typora\typora-user-images\image-20211206195739228.png" alt="image-20211206195739228" style="zoom:67%;" />
+
+    自定义认证数据包，选择刚刚抓包获得的那个mdf文件
+
+  - 点击确定后，点击认证
+
+    若可以正常认证，则点击最小化即可，若不能认证，则查看输出，排错。
+
+    
+
+  
+
 ## Linux(以Ubuntu为例)：
 
 - 打开设置，选择网络选项，点击有线连接的详细设置
