@@ -2,7 +2,7 @@
 
 ## http——ua伪装
 
-同一设备底下出现多个不同的ua，校园网会认为该设备正在共享网络给其他设备，继而进行拉黑处理。本文使用的ua2f插件来实现ua伪装。
+同一设备底下出现多个不同的ua，校园网会认为该设备正在共享网络给其他设备，继而进行拉黑处理。本文使用`ua2f`插件来实现ua伪装。
 
 源项目地址（本文使用）：[imguoliwei/UA2F-cpp](https://github.com/imguoliwei/UA2F-cpp)
 
@@ -12,7 +12,7 @@
 
    > iptables-mod-conntrack-extra iptables-mod-nfqueue libnetfilter-conntrack3 libnetfilter-queue1 libstdcpp6
 
-2. 将`ua伪装`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`、`usr`到右侧根路径），同时对相关文件按**授予执行权限**
+2. 将`ua伪装`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`、`usr`到右侧根路径），同时对相关文件**授予执行权限**
 
 3. 在软路由命令行终端执行以下指令
 
