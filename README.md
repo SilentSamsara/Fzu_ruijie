@@ -1,4 +1,4 @@
-本文内容仅针对x86_64架构软路由，系统使用基于openwrt深度定制的[iStoreOS](https://www.istoreos.com/)，实测可行版本为`2023060914`
+本文教程仅针对x86_64架构软路由，系统使用基于openwrt深度定制的[iStoreOS](https://www.istoreos.com/)，实测可行版本为`2023060914`
 
 ## http——ua伪装
 
