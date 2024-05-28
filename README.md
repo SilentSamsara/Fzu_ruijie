@@ -1,103 +1,132 @@
-# 锐捷客户端手动破解
+本文内容仅针对x86_64架构软路由，系统使用基于openwrt深度定制的[iStoreOS](https://www.istoreos.com/)，实测可行版本为`2023060914`
 
-教程对福大锐捷适用，锐捷认证采用的是PEAP-GTC的802.1x认证，Windows 10默认不支持，需要安装驱动。
+## http——ua伪装
 
-## Windows 10：
+同一设备底下出现多个不同的ua，校园网会认为该设备正在共享网络给其他设备，继而进行拉黑处理。本文使用的ua2f插件来实现ua伪装。
 
-***经测试此方法已不适用于Windows11系统***
+源项目地址（本文使用）：[imguoliwei/UA2F-cpp](https://github.com/imguoliwei/UA2F-cpp)
 
-- 开始前要关闭锐捷自启，或者直接卸载(建议)
+也可使用：[Zxilly/UA2F](https://github.com/Zxilly/UA2F)，下载对应版本到iStoreOS后台安装（需要手动将`/etc/init.d/ua2f`中有关防火墙配置的`FORWORD`全部替换为`PREROUTING`）
 
-![](./img/icon.png)
+1. 需要安装的插件：
 
-- 任务管理器 -> 服务 -> 打开服务
+   > iptables-mod-conntrack-extra iptables-mod-nfqueue libnetfilter-conntrack3 libnetfilter-queue1 libstdcpp6
 
-![](./img/open.png)
+2. 将`ua伪装`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`、`usr`到右侧根路径），同时对相关文件按**授予执行权限**
 
-确保以下两个服务是启动状态，**锐捷启动时会禁用以下服务**，所以要关闭锐捷客户端
+3. 在软路由命令行终端执行以下指令
 
-> Extensible Authentication Protocol
->
-> Wired AutoConfig
+   ```shell
+   service ua2f-mix start
+   ```
 
-- 安装EAP-GTC-xXX.msi（XX对应版本），一路确定就行，**安装完会自动重启**，**安装完会自动重启**，**安装完会自动重启**
-- 打开“网络和Internet”设置 -> 更改适配器选项 -> 以太网 -> 属性 -> 身份认证，选择**受保护的EAP（PEAP）**，然后点击设置
-  - **每次登录时记住此连接的凭据**，也可以选勾，电脑开机就能连上
+   没有任何提示则表示运行成功
 
-![](./img/1.png)
+4. 检查是否运行可执行以下指令
 
-- 取消选勾**通过验证证书来验证服务器身份**，身份验证方法选择**EAP-Token**，点击配置，点击确定
+   ```shell
+   ps | grep ua2f-mix
+   ```
 
-![](./img/2.png)
+   包含以下内容代表成功运行
 
-- 再点确定
+   ```shell
+   15500 root      2316 S    /usr/bin/ua2f-mix 10010 2 --ua --tcp-timestamps
+   ```
+   
+5. 测试效果
 
-  可以勾**每次登录时记住此连接的凭据**，则在下次开机启动时会默认连接网络
+   测试地址：https://ua.233996.xyz/
 
-![](./img/3.png)
+   通过标准端口测试和非标准端口测试，服务器获取的UA和浏览器UA不同说明成功
 
-- 此时，会弹出如下窗口，填写账号和密码后点击OK即可
+   ![](./img/ua_test.jpg)
 
-![](./img/4.png)
+## 代理微信
 
-> User name:登陆时的锐捷账号
->
-> Password:锐捷账号密码
+同一设备底下存在多个微信id，校园网同样会认为该设备正在共享网络给其他设备。本文使用OpenClash来进行代理到其他节点，使得微信流量在校园网中“消失”。**本文不提供任何clash节点和机场，请自行准备**。
 
-- 完成以上步骤就可以正常上网，可以**开启共享热点**，**VMware内使用NAT方式可上网**，锐捷客户端直接弃用。
+1. 安装[OpenClash](https://github.com/vernesong/OpenClash)插件，下载ipk安装包到后台上传安装。
 
+2. 下载clash核心。（按照以下步骤下载完核心后需要导入节点，自行研究，建议使用TUN模式）
 
+   1. 在iStoreOS后台，`服务`->`OpenClash`->`插件设置`->`版本更新`，点击`一键检查更新`，若无法更新继续以下步骤，否则跳出到步骤`3`。
 
-## Windows:
+   2. 设置GitHub请求地址
 
-***使用alternative文件夹中的文件，需要有锐捷客户端，文件内容来源：[路由器实现锐捷认证](https://blog.csdn.net/weixin_40500627/article/details/108395293)***
+      在iStoreOS后台，`服务`->`OpenClash`->`覆写设置`->`Github 地址修改`，修改为任意一个，回到上一步重试。
 
-- 抓包
+3. 将`clash规则`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`到右侧根路径）
 
-  ![getmpf](./img/getmdf.png)
+4. 附加规则
 
-  - 网卡选择有线连接的网卡，**不同电脑网卡名称不一**，视具体情况而定，如Realtek PCIe GBE Family Controller。如图设置完成后，点击开始
+   在iStoreOS后台，`服务`->`OpenClash`->`覆写设置`->`附加规则`，在`规则集`处（最底下）点击新增。参考以下图片设置：
 
-  ![getmpf2](./img/getmdf2.png)
+   ![](./img/clash_rule.jpg)
 
-  - 点击确定，找到**8021x.exe**，在锐捷客户端的安装路径下，一般情况下路径为*C:\Program Files\Ruijie Networks\Ruijie Supplicant*
+   注：`规则集匹配顺序`选择一定要选择`优先（覆盖）`，`指定策略组`选择能够走节点的，不可选择`DIRECT`
 
-  - 选择后**8021x.exe**，后会弹出原版锐捷客端的认证页面，点击认证（或者自动认证完成），认证完成后**MentoHUST工具**会弹出mpf文件的保存页面，**自己取个名字，保存到自己知道的地方**
+`运行模式`建议设置为`TUN`，关闭`仅允许常用端口流量`。要验证是否生效可以到任意一个`控制面板`中，查看`连接`中微信相关连接受否转向目标节点
 
-- 运行**运行测试软件.exe**进行认证
+## 其他
 
-  ​	![authentication](./img/authentication.png)
+1. NTP服务器设置
 
-  ***网卡选择有线连接的网卡***
+   在iStoreOS后台，`系统`->`系统`->`时间同步`，勾选`启用 NTP 客户端`、`作为 NTP 服务器提供服务`、`使用 DHCP 通告的服务器`。修改`候选 NTP 服务器`为以下四个：
 
-  - 点击**设置**
+   > ntp1.aliyun.com
+   >
+   > time1.cloud.tencent.com
+   >
+   > time.ustc.edu.cn
+   >
+   > pool.ntp.org
 
-    ![authentication2](./img/authentication2.png)
+   ![](./img/ntp.jpg)
 
-  - 填入锐捷账号（用户名）、锐捷密码后点击**“+”**
+2. 添加防火墙规则
 
-  - 点击参数设置
+   在iStoreOS后台，`网络`->`防火墙`->`自定义规则`，增加以下内容并保存
 
-    ![authentication3](./img/authentication3.png)
+   ```shell
+   # 防时钟偏移检测
+   iptables -t nat -N ntp_force_local
+   iptables -t nat -I PREROUTING -p udp --dport 123 -j ntp_force_local
+   iptables -t nat -A ntp_force_local -d 0.0.0.0/8 -j RETURN
+   iptables -t nat -A ntp_force_local -d 127.0.0.0/8 -j RETURN
+   iptables -t nat -A ntp_force_local -d 192.168.0.0/16 -j RETURN
+   iptables -t nat -A ntp_force_local -s 192.168.0.0/16 -j DNAT --to-destination 192.168.100.1
+   # 通过 iptables 修改 TTL 值
+   iptables -t mangle -A POSTROUTING -j TTL --ttl-set 128
+   # iptables 拒绝 AC 进行 Flash 检测
+   iptables -I FORWARD -p tcp --sport 80 --tcp-flags ACK ACK -m string --algo bm --string " src=\"http://1.1.1." -j DROP
+   ```
 
-    自定义认证数据包，选择刚刚抓包获得的那个mpf文件
+3. 校园网登录
 
-  - 点击确定后，点击认证
+   使用[HustWebAuth](https://github.com/a76yyyy/HustWebAuth)登陆校园网，下载对应版本重命名为`HustWebAuth`后，上传到`usr/bin/`，**同时授予执行权限**
 
-    若可以正常认证，则点击最小化即可，若不能认证，则查看输出，排错。
+   登陆指令（参考）：
 
-    
+   ```shell
+   ustWebAuth -a username -p password --pingIP 172.179.177.177 
+   ```
 
-  
+   **注：**部分学校在不需要登陆的情况下，可以ping通外网，即校园网放行ICMP协议，但拦截其他协议，以上指令将ping地址写到一个不存在的地址，绕过HustWebAuth是否登陆检测，执行一次登录
 
-## Linux(以Ubuntu为例)：
+   本文使用curl指令进行检测，将`NetDown.sh`上传到`usr/bin/`中，同时**授予执行权限**。然后在iStoreOS后台，`系统`->`启动项`->`本地启动脚本`的`exit 0`前添加:
 
-- 打开设置，选择网络选项，点击有线连接的详细设置
+   ```shell
+   # 登陆参数输出为文件
+   HustWebAuth -a username -p password --pingIP 172.179.177.177 --syslog -o
+   sleep 5s
+   # 执行检测脚本，传入登陆指令
+   sh usr/bin/NetDown.sh HustWebAuth login
+   ```
 
-  ![](./img/setting.png)
+   在iStoreOS后台，`系统`->`启动项`->`计划任务`中添加以下指令，每五分钟执行一次检测脚本。
 
-- 选择安全选项进行802.1x认证的设置，具体设置内容如下蓝色方框所示：
+   ```shell
+   */5 * * * * sh usr/bin/NetDown.sh HustWebAuth login
+   ```
 
-  ![](./img/detail.png)
-
-- 其他的Linux系统差不多，重点在于使用的是**EAP-GTC协议**，基本上Linux的桌面操作系统都支持这个协议

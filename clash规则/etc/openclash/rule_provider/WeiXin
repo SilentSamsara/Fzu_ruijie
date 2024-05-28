@@ -1,0 +1,14 @@
+payload:
+  # > WeiXin
+  - DOMAIN-SUFFIX,weixin.qq.com
+  - DOMAIN-SUFFIX,wechat.com
+  - DOMAIN-SUFFIX,wx.qq.com
+  - DOMAIN-SUFFIX,wx2.qq.com
+  - DOMAIN-SUFFIX,weixin110.qq.com
+  - DOMAIN-SUFFIX,weixinbridge.com
+  - DOMAIN-SUFFIX,wx.qlogo.com
+  - DOMAIN-SUFFIX,wx.qlogo.cn
+
+  - DOMAIN-SUFFIX,mmbiz.qpic.cn
+  - DOMAIN-SUFFIX,shmmsns.qpic.cn
+

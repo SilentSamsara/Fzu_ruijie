@@ -1,0 +1,9 @@
+
+config ua2f-mix 'enabled'
+	option enabled '1'
+
+config ua2f-mix 'firewall'
+	option handle_fw '1'
+	option handle_intranet '1'
+	option handle_tls '1'
+	option handle_mmtls '0'
