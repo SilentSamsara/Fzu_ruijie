@@ -31,7 +31,7 @@
    包含以下内容代表成功运行
 
    ```shell
-   15500 root      2316 S    /usr/bin/ua2f-mix 10010 2 --ua --tcp-timestamps
+   /usr/bin/ua2f-mix 10010 2 --ua --tcp-timestamps
    ```
    
 5. 测试效果
