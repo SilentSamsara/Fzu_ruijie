@@ -109,15 +109,15 @@
    登陆指令（参考）：
 
    ```shell
-   HustWebAuth -a username -p password --pingIP 172.179.177.177 
+   HustWebAuth -a username -p password --pingIP 192.168.111.177 
    ```
 
-   **注：校园网在不需要登陆的情况下，可以ping通外网**，即校园网放行ICMP协议，但拦截其他协议，以上指令将ping地址写到一个不存在的地址，绕过HustWebAuth是否已登陆检测，执行一次登录。
+   注：`HustWebAuth`默认使用ping指令检测是否已连接，**但校园网不限制ICMP协议，所以无论如何都能ping通**，以上指令将ping地址写到一个不存在的地址，绕过HustWebAuth是否已登陆检测，直接执行一次登录。
 
    本文使用curl指令进行检测，将`NetDown.sh`上传到`usr/bin/`中，同时**授予执行权限**。然后在iStoreOS后台，`系统`->`启动项`->`本地启动脚本`的`exit 0`前添加:
 
    ```shell
-   # 登陆参数输出为文件
+   # 登陆参数输出为文件，
    HustWebAuth -a username -p password --pingIP 172.179.177.177 --syslog -o
    sleep 5s
    # 执行检测脚本，传入登陆指令
