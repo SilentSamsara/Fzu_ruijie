@@ -121,12 +121,12 @@
    HustWebAuth -a username -p password --pingIP 172.179.177.177 --syslog -o
    sleep 5s
    # 执行检测脚本，传入登陆指令
-   sh usr/bin/NetDown.sh HustWebAuth login
+   sh /usr/bin/NetDown.sh HustWebAuth login
    ```
 
    在iStoreOS后台，`系统`->`启动项`->`计划任务`中添加以下指令，每五分钟执行一次检测脚本。
 
    ```shell
-   */5 * * * * sh usr/bin/NetDown.sh HustWebAuth login
+   */5 * * * * sh /usr/bin/NetDown.sh HustWebAuth login
    ```
 
