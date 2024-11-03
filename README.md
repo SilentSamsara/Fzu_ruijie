@@ -1,3 +1,5 @@
+# 绕过设备限制（参考方案）
+
 本文教程仅针对x86_64架构软路由，系统使用基于openwrt深度定制的[iStoreOS](https://www.istoreos.com/)，实测可行版本为`2023060914`
 
 ## http——ua伪装
@@ -12,7 +14,7 @@
 
    > iptables-mod-conntrack-extra iptables-mod-nfqueue libnetfilter-conntrack3 libnetfilter-queue1 libstdcpp6
 
-2. 将`ua伪装`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`、`usr`到右侧根路径），同时对相关文件**授予执行权限**
+2. 将`ua伪装`下的文件按照路径放置到软路由指定位置（使用WinSCP拖动`etc`、`usr`到右侧根路径），同时对文件**授予执行权限**（有三个）。
 
 3. 在软路由命令行终端执行以下指令
 
